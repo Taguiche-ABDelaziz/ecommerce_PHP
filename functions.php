@@ -147,14 +147,26 @@ function checkAuthenticate()
 }
 
 
-function printFailure($message ){
+function printFailure($message = "none"){ 
         echo json_encode(array("status" => "failure" , "message" => $message));
+}
+
+
+function printSuccess($message = "none" ){
+        echo json_encode(array("status" => "success" , "message" => $message));
+}
+
+
+function result($count){
+    if ($count > 0) {
+        printSuccess();
+    } else {
+        printFailure();
     }
+    
+}
 
-function sendEmail($to , $title , $body){
-
-    $header = "From: support@waelabogamzza" . "\n" . "CC: waeleagle1234@gmail.com";
-    //$header = "From:\r\n" ."Reply-To: no-reply@younes456.kesug.com\r\n" ."Content-Type: text/plain; charset=UTF-8\r\n";
-    mail($to , $title , $body ,$header);
-    echo "Success Send mail ";
+function sendEmail($to , $title , $body)
+{    
+    mail($to , $title , $body);  
 }

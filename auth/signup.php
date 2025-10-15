@@ -3,13 +3,11 @@
 include "../connect.php";
 
 
-
 $username = filterRequest("username");
-$password = sha1(filterRequest("password"));
+$password = sha1($_POST['password']);
 $email = filterRequest("email");
 $phone = filterRequest("phone");
-$verficode  = rand(10000,9999);
-
+$verfiycode  = rand(10000 , 99999);
 
 
 $stmt =  $con->prepare("SELECT * FROM users WHERE users_email = ? OR users_phone = ? ") ;
@@ -25,9 +23,9 @@ if($count > 0){
         "users_password" => $password,
         "users_email" => $email,
         "users_phone" => $phone,
-        "users_verfiycode" => $verficode,
+        "users_verfiycode" => $verfiycode,
     );
-    sendEmail($email , "Verfiy code App " , "Verfiy code $verficode" );
+    sendEmail($email , "Verfiy code App " , "Verfiy code $verfiycode" );
     insertData("users" , $data) ;
 }
 
