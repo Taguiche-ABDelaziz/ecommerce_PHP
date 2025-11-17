@@ -6,7 +6,7 @@ $usersid = filterRequest("usersid");
 
 $data = getAllData("cartview", "cart_usersid = $usersid",NULL ,false);
 
-$stmt = $con->prepare("SELECT SUM(itmesprice) AS totalprice , SUM(countitems) AS totalcount FROM `cartview`
+$stmt = $con->prepare("SELECT SUM(itemsprice) AS totalprice , SUM(countitems) AS totalcount FROM `cartview`
 WHERE cart_usersid = $usersid
 GROUP BY cart_usersid");
 
@@ -15,7 +15,5 @@ $stmt->execute();
 $datacountprice = $stmt->fetch(PDO :: FETCH_ASSOC);
 
 echo json_encode(array("status" => "success" , "datacart" => $data , "countprice" => $datacountprice));
-
-
 
 ?>

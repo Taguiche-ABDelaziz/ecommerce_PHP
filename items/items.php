@@ -9,11 +9,13 @@ $categoryid = filterRequest("id");
 $userid = filterRequest("usersid");
 
 
-$stmt = $con->prepare("SELECT items1view.* , 1 as favorite FROM items1view
+$stmt = $con->prepare("SELECT items1view.* , 1 as favorite , (items_price - (items_price * items_discount /100))  as 
+itemspricedisount FROM items1view
 INNER JOIN favorite ON favorite.favorite_itemsid = items1view.items_id AND favorite.favorite_usersid = $userid
 WHERE categores_id = $categoryid
 UNION ALL 
-SELECT * , 0 as favorite FROM items1view 
+SELECT * , 0 as favorite  , (items_price - (items_price * items_discount /100))  as itemspricedisount FROM 
+items1view 
 WHERE categores_id = $categoryid AND items_id NOT IN ( SELECT items1view.items_id FROM items1view 
 INNER JOIN favorite ON favorite.favorite_itemsid = items1view.items_id AND favorite.favorite_usersid = $userid ) ");
 
